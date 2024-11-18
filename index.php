@@ -1,35 +1,6 @@
 <?php
 session_start();
-require_once "config.php"; // Include your database connection
 
-if($_POST['action'] == 'logout')
-{
-	unset($_SESSION['username']);
-    unset($_SESSION['usertype']);
-}
-	
-
-
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $username = $_POST['username'];
-    $password = $_POST['password'];
-
-    $sql = "SELECT usertype FROM tblaccounts WHERE username = ? AND password = ?";
-    if ($stmt = mysqli_prepare($link, $sql)) {
-        mysqli_stmt_bind_param($stmt, "ss", $username, $password);
-        mysqli_stmt_execute($stmt);
-        mysqli_stmt_bind_result($stmt, $role);
-        mysqli_stmt_fetch($stmt);
-        
-        if ($role) {
-            $_SESSION['user_role'] = $role;
-            $_SESSION['user_name'] = $username;
-            header("location: mainmenu.php");
-        } else {
-            echo "<script>alert('Invalid credentials');</script>";
-        }
-    }
-}
 ?>
 <!DOCTYPE html>
 <html lang="en">
